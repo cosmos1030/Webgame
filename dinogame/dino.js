@@ -1,4 +1,4 @@
-var canvas = document.getElementById('canvas');
+var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
 
 canvas.width = window.innerWidth - 100;
@@ -14,7 +14,7 @@ var dino = {
         c.fillRect(this.x, this.y, this.width, this.height);
     }
 }
-dino.draw()
+dino.draw();
 
 class Cactus {
     constructor() {
@@ -33,8 +33,8 @@ var timer = 0;
 var cactuses = [];
 var jumpTimer = 0;
 
-function recur() {
-    requestAnimationFrame(recur);
+function animate() {
+    requestAnimationFrame(animate);
     timer++;
 
     c.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,38 +44,37 @@ function recur() {
         cactuses.push(cactus);
     }
 
-    cactuses.forEach((a, i, o)=>{
-        //x좌표가 0미만이면 제거
-        if (a.x<0){
+    cactuses.forEach((a, i, o) => {
+        if (a.x < 0) {
             o.splice(i, 1);
         }
         a.x--;
         a.draw();
     })
 
-    if (jumping == true){
-        dino.y-=2;
+    if (jumping == true) {
+        dino.y -= 2;
         jumpTimer++;
     }
-    if (jumping == false){
-        if (dino.y < 200){
-            dino.y+=2;
+    if (jumping == false) {
+        if (dino.y < 200) {
+            dino.y += 2;
         }
     }
 
-    if (jumpTimer >100){
+    if (jumpTimer > 60) {
         jumping = false;
         jumpTimer = 0;
     }
     dino.draw();
 }
 
-recur();
+animate();
 
 var jumping = false;
 
-document.addEventListener('keydown', function(e){
-    if (e.code ==='Space'){
+document.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
         jumping = true;
     }
-});
+})
